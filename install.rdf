@@ -4,7 +4,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>{E10A6337-382E-4FE6-96DE-936ADC34DD04}</em:id>
     <em:name>MiroIt</em:name>
-    <em:description>MiroIt</em:description>
+    <em:description>Run Miro on any content in Internet.</em:description>
     <em:version>1.0.0</em:version>
     <em:creator>Alexey Kuznetsov</em:creator>
     <em:homepageURL>https://github.com/axet/miroit</em:homepageURL>
