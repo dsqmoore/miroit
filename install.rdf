@@ -2,7 +2,7 @@
 
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
-    <em:id>{E10A6337-382E-4FE6-96DE-936ADC34DD04}</em:id>
+    <em:id>{79287D2F-D399-471A-A95E-BCBED9AEDB3B}</em:id>
     <em:name>MiroIt</em:name>
     <em:description>Run Miro on any content in Internet.</em:description>
     <em:version>1.0.0</em:version>
