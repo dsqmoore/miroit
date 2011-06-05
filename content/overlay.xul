@@ -3,5 +3,5 @@
 <!DOCTYPE overlay SYSTEM>
 
 <overlay id="miroit-browser-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="application/x-javascript" src="chrome://imagezoom/content/overlay.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/overlay.js" />
 </overlay>
