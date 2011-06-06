@@ -37,6 +37,15 @@ MiroIt.GoogleReader = {
       that.catchEntries(doc, event);
     }, false);
 
+    var invokeMiro = doc.getElementById('invokeMiro');
+    if (invokeMiro == null) {
+      var script = doc.createElement('script');
+      script.id = 'invokeMiro';
+      script.setAttribute('type', 'text/javascript');
+      script.innerHTML = 'function start(uri){ try{ var obj = document.createElement("object"); obj.setAttribute("type", "application/x-vnd-aplix-foo"); document.body.appendChild(obj); obj.miro(uri); }catch(e){ alert(e); } return; }';
+      doc.body.appendChild(script);
+    }
+
     return true;
   },
 
@@ -59,7 +68,12 @@ MiroIt.GoogleReader = {
 
     if (entrys instanceof HTMLDivElement) {
       if (entrys.getAttribute('class') == "single-source cards")
-        this.mark(doc);
+        try {
+          this.mark(doc);
+        } catch (e) {
+          alert(e)
+        }
+      ;
     }
   },
 
@@ -88,15 +102,6 @@ MiroIt.GoogleReader = {
   },
 
   addMiro : function(doc, entry) {
-    var start = doc.getElementById('start');
-    if (start == null) {
-      var script = doc.createElement('script');
-      script.id = 'start';
-      script.setAttribute('type', 'text/javascript');
-      script.innerHTML = 'function start(uri){ try{ var obj = document.createElement("object"); obj.setAttribute("type", "application/x-vnd-aplix-foo"); document.body.appendChild(obj); obj.miro(uri); }catch(e){ alert(e); } return; }';
-      doc.body.appendChild(script);
-    }
-
     var icons = entry.children[0].children[0].children[0].children[1];
 
     var miro = null;
@@ -109,6 +114,11 @@ MiroIt.GoogleReader = {
     }
 
     if (miro == null) {
+      var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
+
+      if (!this.checkSite(title.href))
+        return;
+
       miro = doc.createElement('div');
       miro.className = 'miro';
       miro.style.background = 'url(resource://miroit/icon16.png)';
@@ -117,7 +127,6 @@ MiroIt.GoogleReader = {
       miro.style.cursor = 'pointer';
       icons.appendChild(miro);
 
-      var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
       var run = 'start("' + title.href + '")';
       miro.setAttribute('onclick', run);
 
@@ -145,6 +154,18 @@ MiroIt.GoogleReader = {
     obj.miro(href);
 
     document.body.removeChild(obj);
+  },
+
+  checkSite : function(url) {
+
+    href = [ 'youtube.com/watch' ];
+
+    for ( var i = 0; i < href.length; i++) {
+      if (url.indexOf(href[i]) != -1)
+        return true;
+    }
+
+    return false;
   }
 
 };
