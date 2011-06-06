@@ -110,7 +110,7 @@ var MiroIt = {
       var script = doc.createElement('script');
       script.id = 'start';
       script.setAttribute('type', 'text/javascript');
-      script.innerHTML = 'function start(uri){        try{      var obj = document.createElement("object");obj.setAttribute("type", "application/x-vnd-aplix-foo");          document.body.appendChild(obj);          obj.miro(uri);    }catch(e){    alert(e);    }    return    }    ';
+      script.innerHTML = 'function start(uri){ try{ var obj = document.createElement("object"); obj.setAttribute("type", "application/x-vnd-aplix-foo"); document.body.appendChild(obj); obj.miro(uri); }catch(e){ alert(e); } return; }';
       doc.body.appendChild(script);
     }
 
@@ -137,25 +137,21 @@ var MiroIt = {
       var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
       var run = 'start("' + title.href + '")';
       miro.setAttribute('onclick', run);
+
+      // broken:
+      // miro.click = fucntion() {};
+
+      // broken:
+      // miro.addEventListener('click', function);
     }
   },
 
   clickMiro : function(doc, href) {
-    try {
-      var script = doc.createElement('script');
-      script.setAttribute('type', 'text/javascript');
-      script.innerHTML = 'function start(uri){        try{          var obj = document.createElement("object");obj.setAttribute("type", "application/onlive-games-detector");          document.body.appendChild(obj);          obj.runClientProtocolURI(uri);    }catch(e){    alert(e);    }    return    }    ';
-      doc.body.appendChild(script);
-      // div.innerHTML='<object id="plugin1"
-      // type="application/onlive-games-detector" />';
+    var obj = document.createElement('object');
+    obj.setAttribute('type', 'application/x-vnd-aplix-foo');
+    document.body.appendChild(obj);
 
-      // obj = doc.getElementById('plugin1');
-
-      // obj.runClientProtocolURI('olgames:///?auth=%7B%22type%22:%22onlive%22,%22emailAddress%22:%22some@email.com%22,%22signedUserId%22:%221,0,aCwZcjAcvnXyjVpGR-a-KO,ODSOMECUTHERENA==,1300000072,19.71.4.28,4LQsdSOMECUTuW4qtAoWDmg==%22%7D&service_address=ds.onlive.net');
-
-    } catch (e) {
-      alert(e);
-    }
+    obj.miro(href);
   }
 
 };
