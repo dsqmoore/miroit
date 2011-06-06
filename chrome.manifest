@@ -1,4 +1,6 @@
 content   miroit                chrome/content/
+content   miroit                chrome/content/ contentaccessible=yes
+
 overlay   chrome://browser/content/browser.xul          chrome://miroit/content/overlay.xul
 
 skin      miroit   classic/1.0  chrome/skin/
