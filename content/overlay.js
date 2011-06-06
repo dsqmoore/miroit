@@ -44,6 +44,17 @@ var MiroIt = {
     if (chrome == null)
       return;
 
+    // restrictions:
+
+    // extensions unable to override element.insertBefore functions.
+    // it have two scoopes for it. one scoope for extension object and another
+    // for browser object.
+    // if you try to change it here it will no affect state of browser object
+    // (only in specified function, you still may change 'class' attribute for
+    // example)
+
+    // broken.
+    //
     // that = this;
     // chrome.addEventListener('DOMSubtreeModified', listener = function(event)
     // {
@@ -138,11 +149,18 @@ var MiroIt = {
       var run = 'start("' + title.href + '")';
       miro.setAttribute('onclick', run);
 
-      // broken:
-      // miro.click = fucntion() {};
+      // restrictions
 
       // broken:
-      // miro.addEventListener('click', function);
+      // miro.click = fucntion() {};
+      // extension unable to overdefine object.click function, it will throw
+      // NS_ERROR_NOT_AVAILABLE)
+
+      // broken:
+      // miro.addEventListener('click', function, false);
+      // inbound extension function unable to create <object> and add it to
+      // body. it will
+      // appear as empty element "".
     }
   },
 
@@ -152,6 +170,8 @@ var MiroIt = {
     document.body.appendChild(obj);
 
     obj.miro(href);
+    
+    document.body.removeChild(obj);
   }
 
 };
