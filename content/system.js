@@ -1,0 +1,5 @@
+MiroIt.System = {
+
+  browser : null
+
+};
