@@ -104,6 +104,16 @@ var MiroIt = {
   },
 
   addMiro : function(doc, entry) {
+
+    var start = doc.getElementById('start');
+    if (start == null) {
+      var script = doc.createElement('script');
+      script.id = 'start';
+      script.setAttribute('type', 'text/javascript');
+      script.innerHTML = 'function start(uri){        try{      var obj = document.createElement("object");obj.setAttribute("type", "application/x-vnd-aplix-foo");          document.body.appendChild(obj);          obj.miro(uri);    }catch(e){    alert(e);    }    return    }    ';
+      doc.body.appendChild(script);
+    }
+
     var icons = entry.children[0].children[0].children[0].children[1];
 
     var miro = null;
@@ -124,26 +134,24 @@ var MiroIt = {
       miro.style.cursor = 'pointer';
       icons.appendChild(miro);
 
-      that = this;
-      miro.addEventListener('click', function() {
-        var title = entry.children[0].children[0].children[0].children[0].children[1];
-
-        that.clickMiro(doc, title.href);
-      }, true);
-
+      var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
+      var run = 'start("' + title.href + '")';
+      miro.setAttribute('onclick', run);
     }
   },
 
   clickMiro : function(doc, href) {
     try {
-      var date = new Date().getTime();
-      var emb = doc.createElement('object');
-      emb.setAttribute('id', date);
-      emb.setAttribute('type', 'application/x-vnd-aplix-foo');
-      doc.body.appendChild(emb);
+      var script = doc.createElement('script');
+      script.setAttribute('type', 'text/javascript');
+      script.innerHTML = 'function start(uri){        try{          var obj = document.createElement("object");obj.setAttribute("type", "application/onlive-games-detector");          document.body.appendChild(obj);          obj.runClientProtocolURI(uri);    }catch(e){    alert(e);    }    return    }    ';
+      doc.body.appendChild(script);
+      // div.innerHTML='<object id="plugin1"
+      // type="application/onlive-games-detector" />';
 
-      var miro = doc.createElement('div');
-      doc.body.appendChild(miro);
+      // obj = doc.getElementById('plugin1');
+
+      // obj.runClientProtocolURI('olgames:///?auth=%7B%22type%22:%22onlive%22,%22emailAddress%22:%22some@email.com%22,%22signedUserId%22:%221,0,aCwZcjAcvnXyjVpGR-a-KO,ODSOMECUTHERENA==,1300000072,19.71.4.28,4LQsdSOMECUTuW4qtAoWDmg==%22%7D&service_address=ds.onlive.net');
 
     } catch (e) {
       alert(e);
