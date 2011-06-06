@@ -128,7 +128,7 @@ var MiroIt = {
     if (miro == null) {
       miro = doc.createElement('div');
       miro.className = 'miro';
-      miro.style.background = 'url(chrome://miroit/html/icon16.png)';
+      miro.style.background = 'url(chrome://miroit/content/icon16.png)';
       miro.style.height = '15px';
       miro.style.width = '15px';
       miro.style.cursor = 'pointer';
