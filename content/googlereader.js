@@ -68,12 +68,7 @@ MiroIt.GoogleReader = {
 
     if (entrys instanceof HTMLDivElement) {
       if (entrys.getAttribute('class') == "single-source cards")
-        try {
-          this.mark(doc);
-        } catch (e) {
-          alert(e)
-        }
-      ;
+        this.mark(doc);
     }
   },
 
