@@ -80,14 +80,11 @@ static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount,
 
 	url = NPVARIANT_TO_STRING(args[0]);
 
-	strncat(cmd, "/usr/bin/open", sizeof(cmd));
-	strncat(cmd, " ", sizeof(cmd));
-	strncat(cmd, "-a", sizeof(cmd));
-	strncat(cmd, " ", sizeof(cmd));
-	strncat(cmd, "/Applications/Miro.app", sizeof(cmd));
-	strncat(cmd, " ", sizeof(cmd));
-	strncat(cmd, url.UTF8Characters, sizeof(cmd));
-	ret = system(cmd);
+	int pid = fork();
+	if (pid == 0) {
+		execl("/usr/bin/open", "-a", "/Applications/Miro.app", "--args",
+				url.UTF8Characters, 0);
+	}
 
 	result->type = NPVariantType_Int32;
 	result->value.intValue = ret;
@@ -140,10 +137,10 @@ static NPError getValue(NPP instance, NPPVariable variable, void *value) {
 
 	switch (variable) {
 	case NPPVpluginNameString:
-		*((char **)value) = "MiroIt";
+		*((char **) value) = "MiroIt";
 		break;
 	case NPPVpluginDescriptionString:
-		*((char **)value) = "MiroIt run plugin";
+		*((char **) value) = "MiroIt run plugin";
 		break;
 	case NPPVpluginScriptableNPObject:
 		if (!so)
