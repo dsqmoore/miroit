@@ -142,13 +142,21 @@ MiroIt.GoogleReader = {
       var audio = null;
 
       if (body.children[0].children.length > 1)
-        audio = body.children[0].children[1].children[1].children[0];
+        audio = body.children[0].children[1];
 
-      if (audio != null)
-        this.addMiroIcon(icons, audio.href);
+      if (audio != null) {
+        for ( var i = 0; i < audio.children.length; i++) {
+          MiroIt.Console.debug("AudioSearch " + audio.children[i].className + " " + i);
+          if (audio.children[i].className == 'view-enclosure-parent')
+            break;
+        }
+        MiroIt.Console.debug("AudioSearch " + audio + " " + i);
+        this.addMiroIcon(icons, audio.children[i].children[0].href);
+      }
 
-      if (this.checkSite(title.href))
+      if (this.checkSite(title.href)) {
         this.addMiroIcon(icons, title.href);
+      }
     }
   },
 
