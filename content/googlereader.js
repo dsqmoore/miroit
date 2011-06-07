@@ -152,19 +152,21 @@ MiroIt.GoogleReader = {
       if (audio != null) {
         for ( var i = 0; i < audio.children.length; i++) {
           MiroIt.Console.debug("AudioSearch " + audio.children[i].className + " " + i);
-          if (audio.children[i].className == 'view-enclosure-parent')
-            break;
-        }
-        var href = audio.children[i].children[0].href;
-        if (this.checkFormat(href)) {
-          MiroIt.Console.debug("AudioSearch " + audio + " " + i);
-          this.addMiroIcon(doc, icons, href);
+          if (audio.children[i].className == 'view-enclosure-parent') {
+            var href = audio.children[i].children[0].href;
+            if (this.checkFormat(href)) {
+              MiroIt.Console.debug("AudioSearch " + audio + " " + i);
+              this.addMiroIcon(doc, icons, href);
+              return; // exit
+            }
+          }
         }
       }
 
       // 2) check if audio preset
       if (this.checkSite(title.href)) {
         this.addMiroIcon(doc, icons, title.href);
+        return; // exit
       }
     }
   },
