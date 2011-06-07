@@ -8,7 +8,7 @@
     <em:version>1.0.0</em:version>
     <em:creator>Alexey Kuznetsov</em:creator>
     <em:homepageURL>https://github.com/axet/miroit</em:homepageURL>
-    <em:iconURL>chrome://miroit/skin/icon64.png</em:iconURL>
+    <em:iconURL>resource://miroit/iconBig.png</em:iconURL>
     <em:type>2</em:type>
 
     <!-- Firefox -->

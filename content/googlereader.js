@@ -93,35 +93,31 @@ MiroIt.GoogleReader = {
     else
       href = title.value;
 
-    var max = this.max;
+    var current = this.max;
 
     if (this.href != href) {
-      max = 0;
+      current = 0;
+      this.href = href;
     }
 
-    var last = entries.children.length - 1;
+    var max = entries.children.length - 1;
 
-    for (; last > max; last--) {
-      var entry = entries.children[last];
+    for (; max > current; max--) {
+      var entry = entries.children[max];
       if (entry.id == 'scroll-filler')
         break;
     }
 
-    MiroIt.Console.debug("mark " + title + " " + entries + " " + max + "/" + last);
+    MiroIt.Console.debug("mark " + title + " " + entries + " " + current + "/" + max);
 
-    for ( var i = max; i < last; i++) {
-      var entry = entries.children[i];
+    for (; current < max; current++) {
+      var entry = entries.children[current];
       var card = entry.children[0];
-      MiroIt.Console.debug("mark " + i + " " + card.className);
+      MiroIt.Console.debug("mark " + current + " " + card.className);
       // here can be 'search-result', 'card card-0'
       if (card.className.indexOf('card card') != -1)
         this.addMiro(doc, card);
     }
-
-    max = i;
-
-    this.href = href;
-    this.max = max;
 
   },
 
@@ -174,7 +170,7 @@ MiroIt.GoogleReader = {
   addMiroIcon : function(doc, icons, href) {
     miro = doc.createElement('div');
     miro.className = 'miro';
-    miro.style.background = 'url(resource://miroit/icon16.png)';
+    miro.style.background = 'url(resource://miroit/iconReader.png)';
     miro.style.height = '32px';
     miro.style.width = '16px';
     miro.style.cursor = 'pointer';
