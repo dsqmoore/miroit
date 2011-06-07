@@ -97,11 +97,21 @@ MiroIt.GoogleReader = {
 
     var last = entries.children.length - 1;
 
-    MiroIt.Console.debug(title + " " + entries + " " + max + "/" + last);
+    for (; last > max; last--) {
+      var entry = entries.children[last];
+      if (entry.id == 'scroll-filler')
+        break;
+    }
+
+    MiroIt.Console.debug("mark " + title + " " + entries + " " + max + "/" + last);
 
     for ( var i = max; i < last; i++) {
       var entry = entries.children[i];
-      this.addMiro(doc, entry);
+      try {
+        this.addMiro(doc, entry);
+      } catch (e) {
+        alert(e);
+      }
     }
 
     max = i;
@@ -112,7 +122,7 @@ MiroIt.GoogleReader = {
   },
 
   addMiro : function(doc, entry) {
-    MiroIt.Console.debug(entry);
+    MiroIt.Console.debug("addMiro " + entry);
 
     var icons = entry.children[0].children[0].children[0].children[1];
 
@@ -128,35 +138,44 @@ MiroIt.GoogleReader = {
     if (miro == null) {
       var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
 
-      Components.utils.reportError(title.href);
+      var body = entry.children[0].children[0].children[0].children[0].children[5];
+      var audio = null;
 
-      if (!this.checkSite(title.href))
-        return;
+      if (body.children[0].children.length > 1)
+        audio = body.children[0].children[1].children[1].children[0];
 
-      miro = doc.createElement('div');
-      miro.className = 'miro';
-      miro.style.background = 'url(resource://miroit/icon16.png)';
-      miro.style.height = '32px';
-      miro.style.width = '16px';
-      miro.style.cursor = 'pointer';
-      icons.appendChild(miro);
+      if (audio != null)
+        this.addMiroIcon(icons, audio.href);
 
-      var run = 'start("' + title.href + '")';
-      miro.setAttribute('onclick', run);
-
-      // restrictions
-
-      // broken:
-      // miro.click = fucntion() {};
-      // extension unable to overdefine object.click function, it will throw
-      // NS_ERROR_NOT_AVAILABLE)
-
-      // broken:
-      // miro.addEventListener('click', function, false);
-      // inbound extension function unable to create <object> and add it to
-      // body. it will
-      // appear as empty element "".
+      if (this.checkSite(title.href))
+        this.addMiroIcon(icons, title.href);
     }
+  },
+
+  addMiroIcon : function(icons, href) {
+    miro = doc.createElement('div');
+    miro.className = 'miro';
+    miro.style.background = 'url(resource://miroit/icon16.png)';
+    miro.style.height = '32px';
+    miro.style.width = '16px';
+    miro.style.cursor = 'pointer';
+    icons.appendChild(miro);
+
+    var run = 'start("' + href + '")';
+    miro.setAttribute('onclick', run);
+
+    // restrictions
+
+    // broken:
+    // miro.click = fucntion() {};
+    // extension unable to overdefine object.click function, it will throw
+    // NS_ERROR_NOT_AVAILABLE)
+
+    // broken:
+    // miro.addEventListener('click', function, false);
+    // inbound extension function unable to create <object> and add it to
+    // body. it will
+    // appear as empty element "".
   },
 
   // broken
