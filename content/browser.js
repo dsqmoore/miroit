@@ -15,7 +15,7 @@ MiroIt.Browser = {
    */
   _addEventListeners : function(miroit) {
 
-    that = this;
+    var that = this;
     gBrowser.addEventListener("DOMContentLoaded", function(event) {
       that.handlePageLoaded(event);
     }, true);
@@ -28,7 +28,7 @@ MiroIt.Browser = {
    *            the event object.
    */
   handlePageLoaded : function(event) {
-    doc = event.originalTarget;
+    var doc = event.originalTarget;
 
     if (doc instanceof HTMLDocument) {
       this.parse(doc);
