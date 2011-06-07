@@ -222,7 +222,7 @@ MiroIt.GoogleReader = {
   // check file url if it native compatible to miro
   checkFormat : function(url) {
 
-    var href = [ '.jpg', '.png' ];
+    var href = [ '.jpg', '.png', '.gif' ];
 
     for ( var i = 0; i < href.length; i++) {
       if (url.indexOf(href[i]) != -1)
