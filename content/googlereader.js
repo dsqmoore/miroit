@@ -202,6 +202,7 @@ MiroIt.GoogleReader = {
     document.body.removeChild(obj);
   },
 
+  // return true if this url is native compatible to miro
   checkSite : function(url) {
 
     href = [ 'youtube.com/watch' ];
@@ -214,6 +215,7 @@ MiroIt.GoogleReader = {
     return false;
   },
 
+  // check file url if it native compatible to miro
   checkFormat : function(url) {
 
     href = [ '.jpg', '.png' ];
