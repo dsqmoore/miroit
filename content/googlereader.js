@@ -144,16 +144,21 @@ MiroIt.GoogleReader = {
       if (body.children[0].children.length > 1)
         audio = body.children[0].children[1];
 
+      // 1) check if audio preset
       if (audio != null) {
         for ( var i = 0; i < audio.children.length; i++) {
           MiroIt.Console.debug("AudioSearch " + audio.children[i].className + " " + i);
           if (audio.children[i].className == 'view-enclosure-parent')
             break;
         }
-        MiroIt.Console.debug("AudioSearch " + audio + " " + i);
-        this.addMiroIcon(icons, audio.children[i].children[0].href);
+        var href = audio.children[i].children[0].href;
+        if (this.checkFormat(href)) {
+          MiroIt.Console.debug("AudioSearch " + audio + " " + i);
+          this.addMiroIcon(icons, href);
+        }
       }
 
+      // 2) check if audio preset
       if (this.checkSite(title.href)) {
         this.addMiroIcon(icons, title.href);
       }
@@ -207,6 +212,18 @@ MiroIt.GoogleReader = {
     }
 
     return false;
+  },
+
+  checkFormat : function(url) {
+
+    href = [ '.jpg', '.png' ];
+
+    for ( var i = 0; i < href.length; i++) {
+      if (url.indexOf(href[i]) != -1)
+        return false;
+    }
+
+    return true;
   }
 
 };
