@@ -13,5 +13,5 @@ resource 'STR#' (127) { {
 
 // MIME Types
 resource 'STR#' (128) { {
-    "application/x-vnd-aplix-foo"
+    "application/miroit-run-plugin"
 } };

@@ -52,97 +52,54 @@ extern JNIEnv *pluginJniEnv;
 
 #endif
 
-static NPObject        *so       = NULL;
+static NPObject *so = NULL;
 static NPNetscapeFuncs *npnfuncs = NULL;
-static NPP              inst     = NULL;
+static NPP inst = NULL;
 
 /* NPN */
 
-static void logmsg(const char *msg) {
-#if defined(ANDROID)
-	FILE *out = fopen("/sdcard/npsimple.log", "a");
-	if(out) {
-		fputs(msg, out);
-		fclose(out);
-	}
-#elif !defined(_WINDOWS)
-	fputs(msg, stderr);
-#else
-	FILE *out = fopen("\\npsimple.log", "a");
-	if(out) {
-		fputs(msg, out);
-		fclose(out);
-	}
-#endif
-}
-
-static bool
-hasMethod(NPObject* obj, NPIdentifier methodName) {
-	logmsg("npsimple: hasMethod\n");
+static bool hasMethod(NPObject* obj, NPIdentifier methodName) {
 	return true;
 }
 
-static bool
-invokeDefault(NPObject *obj, const NPVariant *args, uint32_t argCount, NPVariant *result) {
-	logmsg("npsimple: invokeDefault\n");
+static bool invokeDefault(NPObject *obj, const NPVariant *args,
+		uint32_t argCount, NPVariant *result) {
 	result->type = NPVariantType_Int32;
-	result->value.intValue = 42;
+	result->value.intValue = 0;
 	return true;
 }
 
-static bool
-invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount, NPVariant *result) {
-    int ret;
-    char cmd[265] = {0};
-    
-	logmsg("npsimple: invokeMiro\n");
+static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount,
+		NPVariant *result) {
+	int ret;
+	char cmd[265] = { 0 };
+	NPString url;
 
-    if(argCount != 1)
-      return false;
-    	
-	NPString url = NPVARIANT_TO_STRING(args[0]);
+	if (argCount != 1)
+		return false;
 
-    strncat(cmd, "/usr/bin/open", sizeof(cmd));
-    strncat(cmd, " ", sizeof(cmd));
-    strncat(cmd, "-a", sizeof(cmd));
-    strncat(cmd, " ", sizeof(cmd));
-    strncat(cmd, "/Applications/Miro.app", sizeof(cmd));
-    strncat(cmd, " ", sizeof(cmd));
-    strncat(cmd, url.UTF8Characters, sizeof(cmd));
+	url = NPVARIANT_TO_STRING(args[0]);
+
+	strncat(cmd, "/usr/bin/open", sizeof(cmd));
+	strncat(cmd, " ", sizeof(cmd));
+	strncat(cmd, "-a", sizeof(cmd));
+	strncat(cmd, " ", sizeof(cmd));
+	strncat(cmd, "/Applications/Miro.app", sizeof(cmd));
+	strncat(cmd, " ", sizeof(cmd));
+	strncat(cmd, url.UTF8Characters, sizeof(cmd));
 	ret = system(cmd);
-	
+
 	result->type = NPVariantType_Int32;
 	result->value.intValue = ret;
 	return true;
 }
 
-static bool
-invoke(NPObject* obj, NPIdentifier methodName, const NPVariant *args, uint32_t argCount, NPVariant *result) {
-	logmsg("npsimple: invoke\n");
-	int error = 1;
+static bool invoke(NPObject* obj, NPIdentifier methodName,
+		const NPVariant *args, uint32_t argCount, NPVariant *result) {
 	char *name = npnfuncs->utf8fromidentifier(methodName);
-	if(name) {
-		if(!strcmp(name, "miro")) {
-			logmsg("npsimple: invoke invokeMiro\n");
+	if (name) {
+		if (!strcmp(name, "miro")) {
 			return invokeMiro(obj, args, argCount, result);
-		}
-		if(!strcmp(name, "foo")) {
-			logmsg("npsimple: invoke foo\n");
-			return invokeDefault(obj, args, argCount, result);
-		}
-		else if(!strcmp(name, "callback")) {
-			if(argCount == 1 && args[0].type == NPVariantType_Object) {
-				static NPVariant v, r;
-				const char kHello[] = "Hello";
-				char *txt = (char *)npnfuncs->memalloc(strlen(kHello));
-
-				logmsg("npsimple: invoke callback function\n");
-				memcpy(txt, kHello, strlen(kHello));
-				STRINGN_TO_NPVARIANT(txt, strlen(kHello), v);
-				/* INT32_TO_NPVARIANT(42, v); */
-				if(npnfuncs->invokeDefault(inst, NPVARIANT_TO_OBJECT(args[0]), &v, 1, &r))
-					return invokeDefault(obj, args, argCount, result);
-			}
 		}
 	}
 	// aim exception handling
@@ -150,75 +107,54 @@ invoke(NPObject* obj, NPIdentifier methodName, const NPVariant *args, uint32_t a
 	return false;
 }
 
-static bool
-hasProperty(NPObject *obj, NPIdentifier propertyName) {
-	logmsg("npsimple: hasProperty\n");
+static bool hasProperty(NPObject *obj, NPIdentifier propertyName) {
 	return false;
 }
 
-static bool
-getProperty(NPObject *obj, NPIdentifier propertyName, NPVariant *result) {
-	logmsg("npsimple: getProperty\n");
+static bool getProperty(NPObject *obj, NPIdentifier propertyName,
+		NPVariant *result) {
 	return false;
 }
 
-static NPClass npcRefObject = {
-	NP_CLASS_STRUCT_VERSION,
-	NULL,
-	NULL,
-	NULL,
-	hasMethod,
-	invoke,
-	invokeDefault,
-	hasProperty,
-	getProperty,
-	NULL,
-	NULL,
-};
+static NPClass npcRefObject =
+		{ NP_CLASS_STRUCT_VERSION, NULL, NULL, NULL, hasMethod, invoke,
+				invokeDefault, hasProperty, getProperty, NULL, NULL, };
 
 /* NPP */
 
-static NPError
-nevv(NPMIMEType pluginType, NPP instance, int mode, int argc, char *argn[], char *argv[], NPSavedData *saved) {
+static NPError nevv(NPMIMEType pluginType, NPP instance, int mode, int argc,
+		char *argn[], char *argv[], NPSavedData *saved) {
 	inst = instance;
-	logmsg("npsimple: new\n");
 	return NPERR_NO_ERROR;
 }
 
-static NPError
-destroy(NPP instance, NPSavedData **save) {
-	if(so)
+static NPError destroy(NPP instance, NPSavedData **save) {
+	if (so)
 		npnfuncs->releaseobject(so);
 	so = NULL;
-	logmsg("npsimple: destroy\n");
 	return NPERR_NO_ERROR;
 }
 
-static NPError
-getValue(NPP instance, NPPVariable variable, void *value) {
+static NPError getValue(NPP instance, NPPVariable variable, void *value) {
 	inst = instance;
-	switch(variable) {
+	switch (variable) {
 	default:
-		logmsg("npsimple: getvalue - default\n");
 		return NPERR_GENERIC_ERROR;
 	case NPPVpluginNameString:
-		logmsg("npsimple: getvalue - name string\n");
-		*((char **)value) = "AplixFooPlugin";
+		*((char **) value) = "AplixFooPlugin";
 		break;
 	case NPPVpluginDescriptionString:
-		logmsg("npsimple: getvalue - description string\n");
-		*((char **)value) = "<a href=\"http://www.aplix.co.jp/\">AplixFooPlugin</a> plugin.";
+		*((char **) value)
+				= "<a href=\"http://www.aplix.co.jp/\">AplixFooPlugin</a> plugin.";
 		break;
 	case NPPVpluginScriptableNPObject:
-		logmsg("npsimple: getvalue - scriptable object\n");
-		if(!so)
+		if (!so)
 			so = npnfuncs->createobject(instance, &npcRefObject);
 		npnfuncs->retainobject(so);
-		*(NPObject **)value = so;
+		*(NPObject **) value = so;
 		break;
 #if defined(XULRUNNER_SDK)
-	case NPPVpluginNeedsXEmbed:
-		logmsg("npsimple: getvalue - xembed\n");
+		case NPPVpluginNeedsXEmbed:
 		*((PRBool *)value) = PR_FALSE;
 		break;
 #endif
@@ -229,14 +165,12 @@ getValue(NPP instance, NPPVariable variable, void *value) {
 static NPError /* expected by Safari on Darwin */
 handleEvent(NPP instance, void *ev) {
 	inst = instance;
-	logmsg("npsimple: handleEvent\n");
 	return NPERR_NO_ERROR;
 }
 
 static NPError /* expected by Opera */
 setWindow(NPP instance, NPWindow* pNPWindow) {
 	inst = instance;
-	logmsg("npsimple: setWindow\n");
 	return NPERR_NO_ERROR;
 }
 
@@ -247,13 +181,12 @@ extern "C" {
 
 NPError OSCALL
 NP_GetEntryPoints(NPPluginFuncs *nppfuncs) {
-	logmsg("npsimple: NP_GetEntryPoints\n");
-	nppfuncs->version       = (NP_VERSION_MAJOR << 8) | NP_VERSION_MINOR;
-	nppfuncs->newp          = nevv;
-	nppfuncs->destroy       = destroy;
-	nppfuncs->getvalue      = getValue;
-	nppfuncs->event         = handleEvent;
-	nppfuncs->setwindow     = setWindow;
+	nppfuncs->version = (NP_VERSION_MAJOR << 8) | NP_VERSION_MINOR;
+	nppfuncs->newp = nevv;
+	nppfuncs->destroy = destroy;
+	nppfuncs->getvalue = getValue;
+	nppfuncs->event = handleEvent;
+	nppfuncs->setwindow = setWindow;
 
 	return NPERR_NO_ERROR;
 }
@@ -265,17 +198,15 @@ NP_GetEntryPoints(NPPluginFuncs *nppfuncs) {
 NPError OSCALL
 NP_Initialize(NPNetscapeFuncs *npnf
 #if defined(ANDROID)
-			, NPPluginFuncs *nppfuncs, JNIEnv *env, jobject plugin_object
+		, NPPluginFuncs *nppfuncs, JNIEnv *env, jobject plugin_object
 #elif !defined(_WINDOWS) && !defined(WEBKIT_DARWIN_SDK)
-			, NPPluginFuncs *nppfuncs
+		, NPPluginFuncs *nppfuncs
 #endif
-			)
-{
-	logmsg("npsimple: NP_Initialize\n");
-	if(npnf == NULL)
+) {
+	if (npnf == NULL)
 		return NPERR_INVALID_FUNCTABLE_ERROR;
 
-	if(HIBYTE(npnf->version) > NP_VERSION_MAJOR)
+	if (HIBYTE(npnf->version) > NP_VERSION_MAJOR)
 		return NPERR_INCOMPATIBLE_VERSION_ERROR;
 
 	npnfuncs = npnf;
@@ -287,20 +218,19 @@ NP_Initialize(NPNetscapeFuncs *npnf
 
 NPError
 OSCALL NP_Shutdown() {
-	logmsg("npsimple: NP_Shutdown\n");
 	return NPERR_NO_ERROR;
 }
 
 char *
 NP_GetMIMEDescription(void) {
-	logmsg("npsimple: NP_GetMIMEDescription\n");
-	return "application/x-vnd-aplix-foo:.foo:anselm@aplix.co.jp";
+	return "application/miroit-run-plugin:miroit:MiroIt run plugin";
 }
 
-NPError OSCALL /* needs to be present for WebKit based browsers */
+NPError OSCALL
+/* needs to be present for WebKit based browsers */
 NP_GetValue(void *npp, NPPVariable variable, void *value) {
-	inst = (NPP)npp;
-	return getValue((NPP)npp, variable, value);
+	inst = (NPP) npp;
+	return getValue((NPP) npp, variable, value);
 }
 
 #ifdef __cplusplus

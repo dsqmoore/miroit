@@ -57,7 +57,7 @@ BEGIN
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "AplixFooPlugin"
             VALUE "LegalCopyright", "Copyright 2008 Aplix Corporation."
-            VALUE "MIMEType", "application/x-vnd-aplix-foo"
+            VALUE "MIMEType", "application/miroit-run-plugin"
             VALUE "OriginalFilename", "npsimple.dll"
             VALUE "ProductName", "Aplix Foo Plugin"
             VALUE "ProductVersion", "1, 0, 0, 3"
