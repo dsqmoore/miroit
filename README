@@ -1,0 +1,17 @@
+MiroIt!
+
+MiroIt project allow you to download all media content from internet dirrectly
+from browser.
+
+Main idea of this project is to get missing Miro ability of having central
+subscription place. Right now Miro miss this ability and you need otherwise
+skip using Miro, use it on one machine or using tricky Dropbox hacks.
+
+This probect does it better.
+
+Right now I'm trying to fucusing to bring all RSS feeds to Google Reader and
+add nice and easy way to run Miro on any content from Google Reader.
+
+Check wiki pages for demo.
+
+https://github.com/axet/miroit/wiki
