@@ -44,7 +44,7 @@ MiroIt.GoogleReader = {
       invokeMiro = doc.createElement('script');
       invokeMiro.id = 'invokeMiro';
       invokeMiro.setAttribute('type', 'text/javascript');
-      invokeMiro.innerHTML = 'function start(uri){ try{ var obj = document.createElement("object"); obj.setAttribute("type", "application/x-vnd-aplix-foo"); document.body.appendChild(obj); obj.miro(uri); }catch(e){ alert(e); } return; }';
+      invokeMiro.setAttribute('src', 'resource://miroit/invokemiro.js');
       doc.body.appendChild(invokeMiro);
     }
 
