@@ -1,0 +1,6 @@
+[submodule "extension"]
+	path = extension
+	url = /Users/axet/source/miroit/extension/
+[submodule "plugin"]
+	path = plugin
+	url = /Users/axet/source/miroit/plugin/
