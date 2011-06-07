@@ -137,15 +137,13 @@ static NPError destroy(NPP instance, NPSavedData **save) {
 
 static NPError getValue(NPP instance, NPPVariable variable, void *value) {
 	inst = instance;
+
 	switch (variable) {
-	default:
-		return NPERR_GENERIC_ERROR;
 	case NPPVpluginNameString:
-		*((char **) value) = "AplixFooPlugin";
+		*((char **)value) = "MiroIt";
 		break;
 	case NPPVpluginDescriptionString:
-		*((char **) value)
-				= "<a href=\"http://www.aplix.co.jp/\">AplixFooPlugin</a> plugin.";
+		*((char **)value) = "MiroIt run plugin";
 		break;
 	case NPPVpluginScriptableNPObject:
 		if (!so)
@@ -158,6 +156,8 @@ static NPError getValue(NPP instance, NPPVariable variable, void *value) {
 		*((PRBool *)value) = PR_FALSE;
 		break;
 #endif
+	default:
+		return NPERR_GENERIC_ERROR;
 	}
 	return NPERR_NO_ERROR;
 }
@@ -221,14 +221,12 @@ OSCALL NP_Shutdown() {
 	return NPERR_NO_ERROR;
 }
 
-char *
-NP_GetMIMEDescription(void) {
+char * NP_GetMIMEDescription(void) {
 	return "application/miroit-run-plugin:miroit:MiroIt run plugin";
 }
 
-NPError OSCALL
 /* needs to be present for WebKit based browsers */
-NP_GetValue(void *npp, NPPVariable variable, void *value) {
+NPError OSCALL NP_GetValue(void *npp, NPPVariable variable, void *value) {
 	inst = (NPP) npp;
 	return getValue((NPP) npp, variable, value);
 }

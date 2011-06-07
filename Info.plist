@@ -15,7 +15,7 @@
     <key>CFBundlePackageType</key>
     <string>BRPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0</string>
+    <string>1.0.0</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
@@ -24,5 +24,9 @@
     <string></string>
     <key>CFPlugInDynamicRegistration</key>
     <string>YES</string>
+    <key>WebPluginName</key>
+    <string>MiroIt Plugin</string>
+    <key>WebPluginDescription</key>
+    <string>MiroIt run plugin &lt;A HREF="https://github.com/axet/miroit"&gt;https://github.com/axet/miroit&lt;/A&gt;</string>
   </dict>
 </plist>
