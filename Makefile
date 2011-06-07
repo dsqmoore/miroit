@@ -7,7 +7,6 @@ all:
 	cp -r resources ${TARGET}
 	mkdir ${TARGET}/chrome
 	cp -r content ${TARGET}/chrome
-	cp -r skin ${TARGET}/chrome
 	(cd ${TARGET}; rm ../miroit.xpi; zip -r ../miroit.xpi *)
 	rm -rf ${TARGET}
 
