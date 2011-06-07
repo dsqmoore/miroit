@@ -191,7 +191,7 @@ MiroIt.GoogleReader = {
     // appear as empty element "".
   },
 
-  // broken
+  // broken, never called
   clickMiro : function(doc, href) {
     var obj = document.createElement('object');
     obj.setAttribute('type', 'application/x-vnd-aplix-foo');
