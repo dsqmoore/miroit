@@ -1,6 +1,6 @@
 [submodule "extension"]
 	path = extension
-	url = /Users/axet/source/miroit/extension/
+	url = git@github.com:axet/miroit-plugin.git
 [submodule "plugin"]
 	path = plugin
-	url = /Users/axet/source/miroit/plugin/
+	url = git@github.com:axet/miroit-extension.git
