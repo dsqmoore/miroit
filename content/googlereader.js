@@ -10,11 +10,11 @@ MiroIt.GoogleReader = {
   },
 
   parse : function(doc) {
-    chrome = doc.getElementById('chrome');
+    var chrome = doc.getElementById('chrome');
     if (chrome == null)
       return false;
 
-    MiroIt.Console.debug(chrome);
+    MiroIt.Console.debug("parse " + chrome);
 
     // restrictions:
 
@@ -34,7 +34,7 @@ MiroIt.GoogleReader = {
     // that.overrideEntries(doc);
     // }, false);
 
-    that = this;
+    var that = this;
     chrome.addEventListener('DOMSubtreeModified', listener = function(event) {
       that.catchEntries(doc, event);
     }, false);
@@ -48,14 +48,14 @@ MiroIt.GoogleReader = {
       doc.body.appendChild(invokeMiro);
     }
 
-    MiroIt.Console.debug(invokeMiro);
+    MiroIt.Console.debug("parse " + invokeMiro);
 
     return true;
   },
 
   // broken
   overrideEntries : function(doc) {
-    entries = doc.getElementById('entries');
+    var entries = doc.getElementById('entries');
     if (entries == null)
       return;
 
@@ -68,12 +68,16 @@ MiroIt.GoogleReader = {
   },
 
   catchEntries : function(doc, event) {
-    element = event.originalTarget;
+    try {
+      var element = event.originalTarget;
 
-    if (element instanceof HTMLDivElement) {
-      MiroIt.Console.debug("changed " + element.id);
-      if (element.id == "entries")
-        this.mark(doc);
+      if (element instanceof HTMLDivElement) {
+        MiroIt.Console.debug("catchEntries " + element.id);
+        if (element.id == "entries")
+          this.mark(doc);
+      }
+    } catch (e) {
+      alert(e);
     }
   },
 
@@ -107,11 +111,11 @@ MiroIt.GoogleReader = {
 
     for ( var i = max; i < last; i++) {
       var entry = entries.children[i];
-      try {
-        this.addMiro(doc, entry);
-      } catch (e) {
-        alert(e);
-      }
+      var card = entry.children[0];
+      MiroIt.Console.debug("mark " + i + " " + card.className);
+      // here can be 'search-result', 'card card-0'
+      if (card.className.indexOf('card card') != -1)
+        this.addMiro(doc, card);
     }
 
     max = i;
@@ -121,10 +125,10 @@ MiroIt.GoogleReader = {
 
   },
 
-  addMiro : function(doc, entry) {
-    MiroIt.Console.debug("addMiro " + entry);
+  addMiro : function(doc, card) {
+    MiroIt.Console.debug("addMiro " + card);
 
-    var icons = entry.children[0].children[0].children[0].children[1];
+    var icons = card.children[0].children[0].children[1];
 
     var miro = null;
     for ( var i = 0; i < icons.children.length; i++) {
@@ -136,9 +140,9 @@ MiroIt.GoogleReader = {
     }
 
     if (miro == null) {
-      var title = entry.children[0].children[0].children[0].children[0].children[1].children[0];
+      var title = card.children[0].children[0].children[0].children[1].children[0];
 
-      var body = entry.children[0].children[0].children[0].children[0].children[5];
+      var body = card.children[0].children[0].children[0].children[5];
       var audio = null;
 
       if (body.children[0].children.length > 1)
@@ -154,18 +158,18 @@ MiroIt.GoogleReader = {
         var href = audio.children[i].children[0].href;
         if (this.checkFormat(href)) {
           MiroIt.Console.debug("AudioSearch " + audio + " " + i);
-          this.addMiroIcon(icons, href);
+          this.addMiroIcon(doc, icons, href);
         }
       }
 
       // 2) check if audio preset
       if (this.checkSite(title.href)) {
-        this.addMiroIcon(icons, title.href);
+        this.addMiroIcon(doc, icons, title.href);
       }
     }
   },
 
-  addMiroIcon : function(icons, href) {
+  addMiroIcon : function(doc, icons, href) {
     miro = doc.createElement('div');
     miro.className = 'miro';
     miro.style.background = 'url(resource://miroit/icon16.png)';
@@ -205,7 +209,7 @@ MiroIt.GoogleReader = {
   // return true if this url is native compatible to miro
   checkSite : function(url) {
 
-    href = [ 'youtube.com/watch' ];
+    var href = [ 'youtube.com/watch' ];
 
     for ( var i = 0; i < href.length; i++) {
       if (url.indexOf(href[i]) != -1)
@@ -218,7 +222,7 @@ MiroIt.GoogleReader = {
   // check file url if it native compatible to miro
   checkFormat : function(url) {
 
-    href = [ '.jpg', '.png' ];
+    var href = [ '.jpg', '.png' ];
 
     for ( var i = 0; i < href.length; i++) {
       if (url.indexOf(href[i]) != -1)
