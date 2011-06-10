@@ -144,7 +144,7 @@ MiroItBrowser.GoogleReader = {
 
     that = this;
     miro.onclick = function() {
-      that.start(href);
+      that.invokeMiro(href);
     };
   },
 
@@ -174,7 +174,7 @@ MiroItBrowser.GoogleReader = {
     return true;
   },
 
-  start : function(uri) {
+  invokeMiro : function(uri) {
     var obj = document.createElement("object");
     obj.setAttribute("type", "application/miroit-run-plugin");
     document.body.appendChild(obj);
