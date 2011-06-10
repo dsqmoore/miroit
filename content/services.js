@@ -14,8 +14,8 @@ MiroIt.Services = {
   services : [ this.googlereader ],
 
   probe : function(doc) {
-    for ( var i = 0; i < services.length; i++) {
-      var service = services[i];
+    for ( var i = 0; i < this.services.length; i++) {
+      var service = this.services[i];
       if (service.probe(doc)) {
         var invokeService = doc.getElementById('invokeService');
         if (invokeService == null) {
