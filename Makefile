@@ -6,7 +6,7 @@ TEST = test.html
 SRC = npsimple.c
 OBJ = ${SRC:.c=.o}
 
-all: options npsimple.so ${shell uname}
+all: options miroit.so ${shell uname}
 
 options:
 	@echo npsimple build options:
@@ -20,14 +20,14 @@ options:
 
 ${OBJ}: config.mk
 
-npsimple.so: ${OBJ}
+miroit.so: ${OBJ}
 	@echo LD $@
 	@${CC} -v -shared -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
 	@echo cleaning
-	@rm -f npsimple.so ${OBJ} Localized.rsrc
-	@rm -rf npsimple.plugin
+	@rm -f miroit.so ${OBJ} Localized.rsrc
+	@rm -rf miroit.plugin
 
 Linux:
 	@chmod 755 npsimple.so
@@ -36,14 +36,10 @@ Linux:
 
 Darwin:
 	/Developer/Tools/Rez -o Localized.rsrc -useDF Localized.r
-	mkdir -p npsimple.plugin/Contents/MacOS
-	mkdir -p npsimple.plugin/Contents/Resources/English.lproj
-	cp -r Localized.rsrc npsimple.plugin/Contents/Resources/English.lproj
-	cp -f Info.plist npsimple.plugin/Contents
-	cp -f npsimple.so npsimple.plugin/Contents/MacOS/npsimple
-	@echo Setup: sudo ln -s `pwd`/npsimple.so /Library/Internet\\ Plug-Ins/npsimple.plugin
-	@echo Test: /Applications/Safari.app/Contents/MacOS/Safari ${TEST}
-	@echo Test: /Applications/Firefox.app/Contents/MacOS/firefox ${TEST}
-	@echo Test: /Applications/Opera.app/Contents/MacOS/Opera file://`pwd`/${TEST}
+	mkdir -p miroit.plugin/Contents/MacOS
+	mkdir -p miroit.plugin/Contents/Resources/English.lproj
+	cp -r Localized.rsrc miroit.plugin/Contents/Resources/English.lproj
+	cp -f Info.plist miroit.plugin/Contents
+	cp -f miroit.so miroit.plugin/Contents/MacOS/miroit
 
 .PHONY: all options clean Darwin Linux
