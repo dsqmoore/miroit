@@ -146,30 +146,6 @@ MiroItBrowser.GoogleReader = {
     miro.onclick = function() {
       that.start(href);
     };
-
-    // restrictions
-
-    // broken:
-    // miro.click = fucntion() {};
-    // extension unable to overdefine object.click function, it will throw
-    // NS_ERROR_NOT_AVAILABLE)
-
-    // broken:
-    // miro.addEventListener('click', function, false);
-    // inbound extension function unable to create <object> and add it to
-    // body. it will
-    // appear as empty element "".
-  },
-
-  // broken, never called
-  clickMiro : function(doc, href) {
-    var obj = document.createElement('object');
-    obj.setAttribute('type', 'application/x-vnd-aplix-foo');
-    document.body.appendChild(obj);
-
-    obj.miro(href);
-
-    document.body.removeChild(obj);
   },
 
   // return true if this url is native compatible to miro
