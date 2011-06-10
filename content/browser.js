@@ -31,12 +31,8 @@ MiroIt.Browser = {
     var doc = event.originalTarget;
 
     if (doc instanceof HTMLDocument) {
-      this.parse(doc);
+      MiroIt.Services.probe(doc);
     }
-  },
-
-  parse : function(doc) {
-    MiroIt.GoogleReader.parse(doc);
   }
 
 };

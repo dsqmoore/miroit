@@ -1,20 +1,12 @@
-MiroIt.GoogleReader = {
+var MiroItBrowser = {};
+
+MiroItBrowser.GoogleReader = {
 
   href : null,
   max : 0,
 
-  init : function() {
-  },
-
-  uninit : function() {
-  },
-
   parse : function(doc) {
     var chrome = doc.getElementById('chrome');
-    if (chrome == null)
-      return false;
-
-    MiroIt.Console.debug("parse " + chrome);
 
     // restrictions:
 
@@ -38,19 +30,6 @@ MiroIt.GoogleReader = {
     chrome.addEventListener('DOMSubtreeModified', listener = function(event) {
       that.catchEntries(doc, event);
     }, false);
-
-    var invokeMiro = doc.getElementById('invokeMiro');
-    if (invokeMiro == null) {
-      invokeMiro = doc.createElement('script');
-      invokeMiro.id = 'invokeMiro';
-      invokeMiro.setAttribute('type', 'text/javascript');
-      invokeMiro.setAttribute('src', 'resource://miroit/invokemiro.js');
-      doc.body.appendChild(invokeMiro);
-    }
-
-    MiroIt.Console.debug("parse " + invokeMiro);
-
-    return true;
   },
 
   // broken
@@ -68,24 +47,17 @@ MiroIt.GoogleReader = {
   },
 
   catchEntries : function(doc, event) {
-    try {
-      var element = event.originalTarget;
+    var element = event.originalTarget;
 
-      if (element instanceof HTMLDivElement) {
-        MiroIt.Console.debug("catchEntries " + element.id);
-        if (element.id == "entries")
-          this.mark(doc);
-      }
-    } catch (e) {
-      alert(e);
+    if (element instanceof HTMLDivElement) {
+      if (element.id == "entries")
+        this.mark(doc);
     }
   },
 
   mark : function(doc) {
     var title = doc.getElementById('chrome-title');
     var entries = doc.getElementById('entries');
-
-    MiroIt.Console.debug("mark " + title + " " + entries);
 
     var href = null;
     if (title.children.length > 0)
@@ -108,12 +80,10 @@ MiroIt.GoogleReader = {
         break;
     }
 
-    MiroIt.Console.debug("mark " + title + " " + entries + " " + current + "/" + max);
-
     for (; current < max; current++) {
       var entry = entries.children[current];
       var card = entry.children[0];
-      MiroIt.Console.debug("mark " + current + " " + card.className);
+
       // here can be 'search-result', 'card card-0'
       if (card.className.indexOf('card card') != -1)
         this.addMiro(doc, card);
@@ -122,8 +92,6 @@ MiroIt.GoogleReader = {
   },
 
   addMiro : function(doc, card) {
-    MiroIt.Console.debug("addMiro " + card);
-
     var icons = card.children[0].children[0].children[1];
 
     var miro = null;
@@ -147,11 +115,9 @@ MiroIt.GoogleReader = {
       // 1) check if audio preset
       if (audio != null) {
         for ( var i = 0; i < audio.children.length; i++) {
-          MiroIt.Console.debug("AudioSearch " + audio.children[i].className + " " + i);
           if (audio.children[i].className == 'view-enclosure-parent') {
             var href = audio.children[i].children[0].href;
             if (this.checkFormat(href)) {
-              MiroIt.Console.debug("AudioSearch " + audio + " " + i);
               this.addMiroIcon(doc, icons, href);
               return; // exit
             }
@@ -176,8 +142,10 @@ MiroIt.GoogleReader = {
     miro.style.cursor = 'pointer';
     icons.appendChild(miro);
 
-    var run = 'start("' + href + '")';
-    miro.setAttribute('onclick', run);
+    that = this;
+    miro.onclick = function() {
+      that.start(href);
+    };
 
     // restrictions
 
@@ -228,6 +196,17 @@ MiroIt.GoogleReader = {
     }
 
     return true;
+  },
+
+  start : function(uri) {
+    var obj = document.createElement("object");
+    obj.setAttribute("type", "application/miroit-run-plugin");
+    document.body.appendChild(obj);
+    obj.miro(uri);
+    document.body.removeChild(obj);
+    return;
   }
 
 };
+
+MiroItBrowser.GoogleReader.parse(document);
