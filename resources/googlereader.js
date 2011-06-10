@@ -125,7 +125,7 @@ MiroItBrowser.GoogleReader = {
         }
       }
 
-      // 2) check if audio preset
+      // 2) check for native site support by miro
       if (this.checkSite(title.href)) {
         this.addMiroIcon(doc, icons, title.href);
         return; // exit
