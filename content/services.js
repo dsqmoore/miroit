@@ -11,9 +11,9 @@ MiroIt.Services = {
     url : 'resource://miroit/googlereader.js'
   },
 
-  probe : function(doc) {
-    var services = [ this.googlereader ];
+  services : [ this.googlereader ],
 
+  probe : function(doc) {
     for ( var i = 0; i < services.length; i++) {
       var service = services[i];
       if (service.probe(doc)) {
