@@ -112,11 +112,12 @@ MiroItBrowser.GoogleReader = {
       if (body.children[0].children.length > 1)
         audio = body.children[0].children[1];
 
-      // 1) check if audio preset
+      // 1) check if audio box preset
       if (audio != null) {
         for ( var i = 0; i < audio.children.length; i++) {
           if (audio.children[i].className == 'view-enclosure-parent') {
             var href = audio.children[i].children[0].href;
+            // check for supported audio formats
             if (this.checkFormat(href)) {
               this.addMiroIcon(doc, icons, href);
               return; // exit
