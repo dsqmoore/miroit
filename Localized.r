@@ -3,12 +3,12 @@
 // Plugin info
 resource 'STR#' (126) { {
     "Tests npsimple()",
-    "npsimple Test Plug-In"
+    "miroit Test Plug-In"
 } };
 
 // MIME Type descriptions
 resource 'STR#' (127) { {
-    "npsimple test"
+    "miroit test"
 } };
 
 // MIME Types

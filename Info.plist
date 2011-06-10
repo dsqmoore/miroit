@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleExecutable</key>
-    <string>npsimple</string>
+    <string>miroit</string>
     <key>CFBundleGetInfoString</key>
     <string>Copyright 2007-2008 Aplix Corporation</string>
     <key>CFBundleIdentifier</key>
