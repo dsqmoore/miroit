@@ -164,7 +164,8 @@ MiroItBrowser.GoogleReader = {
 
   // check file url if it native compatible to miro
   checkFormat : function(url) {
-
+    url = url.toLowerCase();
+    
     var href = [ '.jpg', '.png', '.gif' ];
 
     for ( var i = 0; i < href.length; i++) {
