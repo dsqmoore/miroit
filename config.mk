@@ -9,7 +9,7 @@ LDFLAGS = -dynamiclib #-framework Carbon -framework CoreFoundation -framework We
 else
 INCS = $(shell pkg-config --cflags-only-I libxul)
 CPPFLAGS = -DVERSION=\"${VERSION}\" -DXULRUNNER_SDK
-#LDFLAGS = -L/usr/lib -lc
+#LDFLAGS = $(shell pkg-config --libs libc)
 endif
 CFLAGS = -g -pedantic -Wall -O2 ${INCS} ${CPPFLAGS}
 

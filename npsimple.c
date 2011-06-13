@@ -16,6 +16,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #if defined(XULRUNNER_SDK)
 #include <npapi.h>
 #include <npfunctions.h>
@@ -88,8 +92,26 @@ static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount, 
   const char* url = StringToChars(NPVARIANT_TO_STRING(args[0]));
 
   int pid = fork();
-  if (pid == 0) {
-    execl("/usr/bin/open", "-g", "-a", "/Applications/Miro.app", url, 0);
+  if (pid == 0)
+  {
+    {
+      const char *app;
+      struct stat sb;
+      app = "/Applications/Miro.app";
+      if (stat(app, &sb) == 0 && S_ISDIR(sb.st_mode))
+      {
+        execl("/usr/bin/open", "/usr/bin/open", "-g", "-a", "/Applications/Miro.app", url, 0);
+      }
+    }
+    {
+      const char *app;
+      struct stat sb;
+      app = "/usr/bin/miro";
+      if (stat(app, &sb) == 0 && S_ISREG(sb.st_mode))
+      {
+        execl(app, app, url, 0);
+      }
+    }
   }
 
   free(url);
