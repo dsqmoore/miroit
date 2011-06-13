@@ -30,9 +30,7 @@ clean:
 	@rm -rf miroit.plugin
 
 Linux:
-	@chmod 755 npsimple.so
-	@echo Setup: sudo ln -s ${shell pwd}/npsimple.so /usr/lib/mozilla/plugins/npsimple.so
-	@echo Test: /usr/lib/webkit-1.0/libexec/GtkLauncher file://`pwd`/${TEST} # apt-get install libwebkit-1.0-1
+	@chmod 755 miroit.so
 
 Darwin:
 	/Developer/Tools/Rez -o Localized.rsrc -useDF Localized.r

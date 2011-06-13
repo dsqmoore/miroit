@@ -7,7 +7,7 @@ ifeq (${shell uname}, Darwin)
 CPPFLAGS = -DVERSION=\"${VERSION}\" -DWEBKIT_DARWIN_SDK
 LDFLAGS = -dynamiclib #-framework Carbon -framework CoreFoundation -framework WebKit
 else
-INCS = -I/home/anselm/aplix/code/third_party/xulrunner-sdk # apt-get install xulrunner-dev
+INCS = $(shell pkg-config --cflags-only-I libxul)
 CPPFLAGS = -DVERSION=\"${VERSION}\" -DXULRUNNER_SDK
 #LDFLAGS = -L/usr/lib -lc
 endif

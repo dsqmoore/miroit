@@ -18,7 +18,8 @@
 
 #if defined(XULRUNNER_SDK)
 #include <npapi.h>
-#include <npupp.h>
+#include <npfunctions.h>
+#include <prtypes.h>
 #include <npruntime.h>
 #elif defined(ANDROID)
 
