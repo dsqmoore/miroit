@@ -3,7 +3,7 @@ TOPDIR=$(PWD)/..
 
 all:
 	(rm -rf ../SOURCES/miroit-${VERSION})
-	(mkdir ../SOURCES/miroit-${VERSION})
+	(mkdir -p ../SOURCES/miroit-${VERSION})
 	(cd ../../../../plugin; git archive master --prefix plugin/ | tar -x -C ../installer/linux/rpm/SOURCES/miroit-${VERSION})
 	(cd ../../../../extension; git archive master --prefix extension/ | tar -x -C ../installer/linux/rpm/SOURCES/miroit-${VERSION})
 	(cd ../SOURCES; tar -czvf miroit-${VERSION}.tgz miroit-${VERSION})
