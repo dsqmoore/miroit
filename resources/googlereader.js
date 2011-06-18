@@ -30,6 +30,17 @@ MiroItBrowser.GoogleReader = {
     chrome.addEventListener('DOMSubtreeModified', listener = function(event) {
       that.catchEntries(doc, event);
     }, false);
+    
+    var invokeCSS = doc.getElementById('invokeCSS');
+    if (invokeCSS == null) {
+      invokeCSS = doc.createElement('link');
+      invokeCSS.id = 'invokeCSS';
+      invokeCSS.setAttribute('rel', 'stylesheet');
+      invokeCSS.setAttribute('type', 'text/css');
+      invokeCSS.setAttribute('href', 'resource://miroit/googlereader.css');
+      doc.head.appendChild(invokeCSS);
+    }
+
   },
 
   // broken
@@ -97,7 +108,7 @@ MiroItBrowser.GoogleReader = {
     var miro = null;
     for ( var i = 0; i < icons.children.length; i++) {
       var icon = icons.children[i];
-      if (icon.getAttribute('class') == 'miro') {
+      if (icon.getAttribute('class') == 'miroit') {
         miro = icon;
         break;
       }
@@ -136,11 +147,7 @@ MiroItBrowser.GoogleReader = {
 
   addMiroIcon : function(doc, icons, href) {
     miro = doc.createElement('div');
-    miro.className = 'miro';
-    miro.style.background = 'url(resource://miroit/iconReader.png)';
-    miro.style.height = '32px';
-    miro.style.width = '16px';
-    miro.style.cursor = 'pointer';
+    miro.className = 'miroit';
     icons.appendChild(miro);
 
     that = this;

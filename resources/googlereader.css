@@ -1,0 +1,11 @@
+div.miroit {
+	background: url(resource://miroit/iconReader.png) no-repeat 0 0;
+	width: 16px;
+	height: 32px;
+	display: block;
+	text-indent: -9999px;
+}
+
+div.miroit:hover { background-position: 0 -32px; }
+
+div.miroit:active { background-position: 0 -64px; }
