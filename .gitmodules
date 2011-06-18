@@ -4,3 +4,6 @@
 [submodule "plugin"]
 	path = plugin
 	url = git@github.com:axet/miroit-plugin.git
+[submodule "installer"]
+	path = installer
+	url = ./installer/
