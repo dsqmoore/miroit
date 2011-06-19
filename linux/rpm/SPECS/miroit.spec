@@ -7,7 +7,7 @@ License:        GPL-3
 URL:            https://github.com/axet/miroit
 Source0:        miroit-%{version}.tgz
 
-BuildRequires:  gcc
+BuildRequires:  gcc, xulrunner-devel
 Requires:       Miro
 
 %description
