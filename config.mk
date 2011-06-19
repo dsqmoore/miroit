@@ -8,7 +8,7 @@ CPPFLAGS = -DVERSION=\"${VERSION}\" -DWEBKIT_DARWIN_SDK
 LDFLAGS = -dynamiclib #-framework Carbon -framework CoreFoundation -framework WebKit
 else
 INCS = $(shell pkg-config --cflags-only-I libxul)
-CPPFLAGS = -DVERSION=\"${VERSION}\" -DXULRUNNER_SDK
+CPPFLAGS = -fPIC -DVERSION=\"${VERSION}\" -DXULRUNNER_SDK
 #LDFLAGS = $(shell pkg-config --libs libc)
 endif
 CFLAGS = -g -pedantic -Wall -O2 ${INCS} ${CPPFLAGS}
