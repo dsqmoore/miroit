@@ -1,7 +1,10 @@
 VERSION = $(shell grep Version miroit.spec | awk '{print $$2};' )
 TOPDIR=$(PWD)/..
 
-all: deps
+all: deps build install
+
+build:
+	(rm -rf ../RPMS/*)
 	(rm -rf ../SOURCES/miroit-${VERSION})
 	(mkdir -p ../SOURCES/miroit-${VERSION})
 	(cd ../../../../plugin; git archive master --prefix plugin/ | tar -x -C ../installer/linux/rpm/SOURCES/miroit-${VERSION})
@@ -11,3 +14,6 @@ all: deps
 
 deps:
 	sudo yum-builddep -y miroit.spec
+
+install:
+	sudo rpm -U --force ../RPMS/*/*
