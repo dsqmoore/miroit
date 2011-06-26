@@ -24,7 +24,7 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/mozilla/plugins
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/firefox-5/extensions/
 cp plugin/miroit.so $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/
-cp extension/miroit.xpi $RPM_BUILD_ROOT/%{_libdir}/firefox-4/extensions/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
+cp extension/miroit.xpi $RPM_BUILD_ROOT/%{_libdir}/firefox-5/extensions/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
 
 %files
 %{_libdir}/mozilla/plugins/miroit.so
