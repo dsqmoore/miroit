@@ -28,7 +28,7 @@ cp extension/miroit.xpi $RPM_BUILD_ROOT/%{_libdir}/firefox-4/extensions/{79287D2
 
 %files
 %{_libdir}/mozilla/plugins/miroit.so
-%{_libdir}/firefox-4/extensions/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
+%{_libdir}/firefox-5/extensions/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
 
 %changelog
 
