@@ -1,5 +1,5 @@
 Name:           miroit
-Version:        1.0.0
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        MiroIt Plugin
 
@@ -22,7 +22,7 @@ make -C extension
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/mozilla/plugins
-mkdir -p $RPM_BUILD_ROOT/%{_libdir}/firefox-4/extensions/
+mkdir -p $RPM_BUILD_ROOT/%{_libdir}/firefox-5/extensions/
 cp plugin/miroit.so $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/
 cp extension/miroit.xpi $RPM_BUILD_ROOT/%{_libdir}/firefox-4/extensions/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
 
