@@ -1,6 +1,6 @@
 Name:           miroit
-Version:        1.0.1
-Release:        1%{?dist}
+Version:        1.0.0
+Release:        2%{?dist}
 Summary:        MiroIt Plugin
 
 License:        GPL-3
