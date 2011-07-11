@@ -7,7 +7,7 @@
     <key>CFBundleExecutable</key>
     <string>miroit</string>
     <key>CFBundleGetInfoString</key>
-    <string>Copyright 2007-2008 Aplix Corporation</string>
+    <string>Copyright 2011 Alexey Kuznetsov &lt;ak@axet.ru&gt;</string>
     <key>CFBundleIdentifier</key>
     <string>net.webvm</string>
     <key>CFBundleInfoDictionaryVersion</key>
@@ -15,11 +15,11 @@
     <key>CFBundlePackageType</key>
     <string>BRPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>1.0.2</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>
-    <string>1.0.0</string>
+    <string>1.0.2</string>
     <key>CFPlugInDynamicRegisterFunction</key>
     <string></string>
     <key>CFPlugInDynamicRegistration</key>
