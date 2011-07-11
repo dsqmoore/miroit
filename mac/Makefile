@@ -1,3 +1,12 @@
+all: clean build pack
+
+clean:
+	rm -rf dmg
+
+build:
+	make -C ../../extension clean all
+	make -C ../../plugin clean all
+
 pack:
 	mkdir -p dmg
 	cp -r ../../plugin/miroit.plugin dmg/
