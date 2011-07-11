@@ -11,16 +11,20 @@ MiroItBrowser.GoogleReader = {
     // restrictions:
 
     // extensions unable to override element.insertBefore functions.
-    // it have two scoopes for it. one scoope for extension object and another
+    // it have two scoopes for it. one scoope for extension object and
+    // another
     // for browser object.
-    // if you try to change it here it will no affect state of browser object
-    // (only in specified function, you still may change 'class' attribute for
+    // if you try to change it here it will no affect state of browser
+    // object
+    // (only in specified function, you still may change 'class' attribute
+    // for
     // example)
 
     // broken.
     //
     // that = this;
-    // chrome.addEventListener('DOMSubtreeModified', listener = function(event)
+    // chrome.addEventListener('DOMSubtreeModified', listener =
+    // function(event)
     // {
     // chrome.removeEventListener('DOMSubtreeModified', listener, false);
     // that.overrideEntries(doc);
@@ -30,7 +34,7 @@ MiroItBrowser.GoogleReader = {
     chrome.addEventListener('DOMSubtreeModified', listener = function(event) {
       that.catchEntries(doc, event);
     }, false);
-    
+
     var invokeCSS = doc.getElementById('invokeCSS');
     if (invokeCSS == null) {
       invokeCSS = doc.createElement('link');
@@ -172,8 +176,8 @@ MiroItBrowser.GoogleReader = {
   // check file url if it native compatible to miro
   checkFormat : function(url) {
     url = url.toLowerCase();
-    
-    var href = [ '.jpg', '.png', '.gif' ];
+
+    var href = [ '.jpg', '.png', '.gif', '.jpeg' ];
 
     for ( var i = 0; i < href.length; i++) {
       if (url.indexOf(href[i]) != -1)
