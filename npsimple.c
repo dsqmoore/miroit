@@ -100,7 +100,7 @@ static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount, 
       app = "/Applications/Miro.app";
       if (stat(app, &sb) == 0 && S_ISDIR(sb.st_mode))
       {
-        execl("/usr/bin/open", "/usr/bin/open", "-g", "-a", "/Applications/Miro.app", url, 0);
+        execl("/usr/bin/open", "/usr/bin/open", "-g", "-a", app, url, 0);
       }
     }
     {
