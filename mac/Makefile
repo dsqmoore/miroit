@@ -1,4 +1,4 @@
-all: clean build pack
+all: clean build pack deploy
 
 clean:
 	rm -rf dmg
@@ -11,3 +11,9 @@ pack:
 	mkdir -p dmg
 	cp -r ../../plugin/miroit.plugin dmg/
 	cp ../../extension/miroit.xpi dmg/{79287D2F-D399-471A-A95E-BCBED9AEDB3B}.xpi
+
+deploy:
+	/Developer/usr/bin/packagemaker --verbose --doc MiroItPlugin.pmdoc --out MiroItPlugin.pkg
+
+install:
+	installer -pkg MiroItPlugin.pkg  -target ~
