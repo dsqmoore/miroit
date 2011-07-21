@@ -96,13 +96,14 @@ static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount, 
   if (pid == 0)
   {
     {
-      const char *app;
+      const char *app = "/Applications/Miro.app";
+      const char *sopen = "/usr/bin/open";
       struct stat sb;
-      app = "/Applications/Miro.app";
       if (stat(app, &sb) == 0 && S_ISDIR(sb.st_mode))
       {
     	char *env[] = { "LANG=UTF-8", NULL };
-    	execle("/usr/bin/open", "/usr/bin/open", "-g", "-a", app, url, 0, env);
+    	char *args[] = { sopen, "-g", "-a", app, url, NULL};
+    	int res = execve(sopen, args, env);
       }
     }
     {
