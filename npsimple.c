@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdint.h>
 
 #if defined(XULRUNNER_SDK)
 #include <npapi.h>
@@ -100,7 +101,8 @@ static bool invokeMiro(NPObject *obj, const NPVariant *args, uint32_t argCount, 
       app = "/Applications/Miro.app";
       if (stat(app, &sb) == 0 && S_ISDIR(sb.st_mode))
       {
-        execl("/usr/bin/open", "/usr/bin/open", "-g", "-a", app, url, 0);
+    	char *env[] = { "LANG=UTF-8", NULL };
+    	execle("/usr/bin/open", "/usr/bin/open", "-g", "-a", app, url, 0, env);
       }
     }
     {
