@@ -16,4 +16,4 @@ deploy:
 	/Developer/usr/bin/packagemaker --verbose --doc MiroItPlugin.pmdoc --out MiroItPlugin.pkg
 
 install:
-	installer -pkg MiroItPlugin.pkg  -target ~
+	sudo installer -pkg MiroItPlugin.pkg  -target /
