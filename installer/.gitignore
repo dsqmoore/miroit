@@ -1,0 +1,7 @@
+mac/dmg/
+mac/MiroItPlugin.pkg
+linux/rpm/BUILD/
+linux/rpm/RPMS/
+linux/rpm/SOURCES/
+linux/rpm/SRPMS/
+
