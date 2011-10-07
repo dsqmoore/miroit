@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="bin/build/chrome/content"/>
+	<classpathentry kind="src" path="bin/build/defaults/preferences"/>
+	<classpathentry kind="src" path="bin/build/resources"/>
+	<classpathentry kind="src" path="src/chrome/content"/>
+	<classpathentry kind="src" path="src/defaults/preferences"/>
+	<classpathentry kind="src" path="src/resources"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

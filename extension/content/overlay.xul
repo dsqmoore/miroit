@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<overlay id="miroit-browser-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="application/x-javascript" src="chrome://miroit/content/miroit.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/services.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/console.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/system.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/browser.js" />
+  <script type="application/x-javascript" src="chrome://miroit/content/overlay.js" />
+</overlay>
