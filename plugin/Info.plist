@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>miroit</string>
+    <key>CFBundleGetInfoString</key>
+    <string>Copyright 2011 Alexey Kuznetsov &lt;ak@axet.ru&gt;</string>
+    <key>CFBundleIdentifier</key>
+    <string>net.webvm</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundlePackageType</key>
+    <string>BRPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.2</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.2</string>
+    <key>CFPlugInDynamicRegisterFunction</key>
+    <string></string>
+    <key>CFPlugInDynamicRegistration</key>
+    <string>YES</string>
+    <key>WebPluginName</key>
+    <string>MiroIt Plugin</string>
+    <key>WebPluginDescription</key>
+    <string>MiroIt run plugin &lt;A HREF="https://github.com/axet/miroit"&gt;https://github.com/axet/miroit&lt;/A&gt;</string>
+  </dict>
+</plist>
